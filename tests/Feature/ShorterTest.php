@@ -5,11 +5,15 @@ use Tests\TestCase;
 class ShorterTest extends TestCase
 {
 
+    const ENDPOINT = '/api/v1/short-urls';
+
+
     public function testUriACK()
     {
-        $response = $this->postJson("/api/v1/short-urls", [
+
+        $response = $this->postJson(self::ENDPOINT, [
             'url' => 'https://example.com/12345'
-        ])->withHeaders([ 'Authorization' => 'Bearer []', 'Accept' => 'application/json' ]);
+        ], [ 'Authorization' => 'Bearer []', 'Accept' => 'application/json' ]);
 
         $this->assertEquals(200, $response->getStatusCode());
     }
@@ -25,9 +29,10 @@ class ShorterTest extends TestCase
         string $token,
         int $expectedStatusCode
     ) {
-        $response = $this->postJson("/api/v1/short-urls", [
+
+        $response = $this->postJson(self::ENDPOINT, [
             'url' => 'https://example.com/12345'
-        ])->withHeaders([ 'Authorization' => 'Bearer ' . $token, 'Accept' => 'application/json' ]);
+        ], [ 'Authorization' => 'Bearer ' . $token, 'Accept' => 'application/json' ]);
 
         $this->assertEquals($expectedStatusCode, $response->getStatusCode());
     }
@@ -64,13 +69,14 @@ class ShorterTest extends TestCase
      *
      * @dataProvider urlsProvider
      */
-    public function testValidURL(
+    public function testValidUrl(
         string $url,
         int $expectedStatusCode
     ) {
-        $response = $this->postJson("/api/v1/short-urls", [
+
+        $response = $this->postJson(self::ENDPOINT, [
             'url' => $url
-        ])->withHeaders([ 'Authorization' => 'Bearer []', 'Accept' => 'application/json' ]);
+        ], [ 'Authorization' => 'Bearer []', 'Accept' => 'application/json' ]);
 
         $this->assertEquals($expectedStatusCode, $response->getStatusCode());
     }

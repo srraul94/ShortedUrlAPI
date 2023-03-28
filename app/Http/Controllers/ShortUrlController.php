@@ -19,7 +19,7 @@ class ShortUrlController extends Controller
         if ($validator->fails()) {
             return response()->json(
                 [ 'error' => 'URL no válida.'],
-                401, [], JSON_UNESCAPED_UNICODE);
+                404, [], JSON_UNESCAPED_UNICODE);
         }
 
 
