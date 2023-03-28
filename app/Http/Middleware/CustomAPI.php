@@ -36,10 +36,14 @@ class CustomAPI
         ];
 
         foreach (str_split($token) as $char){
+
+
             if (array_key_exists($char,$pairs)){
                 $stack[] = $char;
             }
+
             elseif (in_array($char, $pairs)){
+
                 if (empty($stack)){
                     return false;
                 }
@@ -49,6 +53,9 @@ class CustomAPI
                 if ($pairs[$last] !== $char){
                     return false;
                 }
+            }
+            else{
+                return false;
             }
         }
         return empty($stack);

@@ -19,7 +19,7 @@ class ShortUrlController extends Controller
         if ($validator->fails()) {
             return response()->json(
                 [ 'error' => 'URL no válida.'],
-                400, [], JSON_UNESCAPED_UNICODE);
+                401, [], JSON_UNESCAPED_UNICODE);
         }
 
 
@@ -49,30 +49,4 @@ class ShortUrlController extends Controller
 
     }
 
-    public function validateParentheses(string $input): bool {
-        $stack = [];
-        $pairs = [
-            '{' => '}',
-            '[' => ']',
-            '(' => ')',
-        ];
-
-        foreach (str_split($input) as $char){
-            if (array_key_exists($char,$pairs)){
-                $stack[] = $char;
-            }
-            elseif(in_array(in_array($char,$pairs))) {
-                if (empty($stack)){
-                    return false;
-                }
-
-                $last = array_pop($stack);
-
-                if ($pairs[$last] !== $char){
-                    return false;
-                }
-            }
-        }
-        return empty($stack);
-    }
 }
